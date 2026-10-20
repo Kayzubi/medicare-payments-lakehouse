@@ -6,7 +6,7 @@ Spark 4.2.0 on Java 25.0.3, Intel Mac, 4 cores, 6 GB driver memory. Smoke test (
 
 - Step 2: Downloaded the 2024 Part D file (SIZE, ROWS lines) with a curl script that resumes on failure and writes a manifest with a SHA-256 checksum. Bronze can be rebuilt with one command, and every result traces back to an exact file version.
 
-- Step 3: Profiled the raw file with every column as a string, so Spark didn’t guess types. One aggregation pass over 3.8 GB of CSV (ROWS rows, PARTITIONS partitions, 4 cores) took X seconds. This is the baseline Parquet has to beat.\
+- Step 3: Profiled 28,023,892 rows (3.8 GB CSV, 31 partitions, 4 cores) as strings. One aggregation pass took 135.6s. Suppression flags reconcile exactly with null counts: 12,463,502 GE65 values hidden by rule, not missing. Tot_Benes is 54% suppressed with no flag, so silver adds one. CMS also drops pairs under 11 claims, so we only see heavy prescribing.
 
 
 # Decisions log
