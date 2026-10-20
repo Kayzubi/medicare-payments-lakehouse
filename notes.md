@@ -10,6 +10,8 @@ Spark 4.2.0 on Java 25.0.3, Intel Mac, 4 cores, 6 GB driver memory. Smoke test (
 
 - Step 4: Bronze as Parquet, all columns still strings: 3.8 GB to 674 MB (5.8x). Cost by state 64.5s to 9.1s, distinct NPI 60.3s to 6.5s, count 24.2s to 1.5s (metadata). CSV runs didn’t speed up on repeat, so parsing, not disk, was the bottleneck. Conversion took 196s and pays back after about 4 queries.
 
+- Step 5: Typed silver with an explicit schema. 0 cast failures, 0 invalid NPIs, 0 duplicate (npi, brand, generic) keys, 0 rows under 11 claims. Suppression flags reconcile exactly. Silver is 682 MB vs 674 MB bronze: typing didn’t shrink it, correctness was the point. Military, unknown and foreign state codes are excluded from peer groups.
+
 
 # Decisions log
 - 2026-10-19: Profile raw data as strings, not inferSchema. Inference costs an extra full pass and mistypes NPI and FIPS codes. Explicit types go in silver.
